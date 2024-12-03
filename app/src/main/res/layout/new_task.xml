@@ -1,33 +1,35 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="@color/white"
-    android:layout_margin="8dp"
-    android:elevation="4dp">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- EditText for new task input -->
+    <!-- Task input -->
     <EditText
         android:id="@+id/newTaskText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:hint="New Task"
-        android:padding="12dp"
-        android:layout_marginBottom="8dp"/>
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Date selection -->
+    <TextView
+        android:id="@+id/datePickerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/border_background"
+        android:text="Select Date"
+        android:layout_marginBottom="16dp"/>
 
     <!-- Save button -->
     <Button
         android:id="@+id/newTaskButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newTaskText"
-        android:layout_alignParentEnd="true"
-        android:textSize="16sp"
         android:text="Save"
-        android:textAllCaps="false"
-        android:padding="8dp"
-        android:textColor="@android:color/white" />
-
-</RelativeLayout>
+        android:enabled="false"
+        android:padding="12dp"/>
+</LinearLayout>

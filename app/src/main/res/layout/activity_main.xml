@@ -4,25 +4,54 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- TextView for displaying today's date -->
     <TextView
-        android:id="@+id/tasksText"
+        android:id="@+id/todaysDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Today"
         android:textStyle="bold"
-        android:text="Todo App"
         android:textColor="@android:color/black"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
-        android:textSize="32sp" />
+        android:textSize="16sp" />
 
+    <!-- New "Today" button, placed to the right of the date text -->
+    <Button
+        android:id="@+id/todayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/todaysDate"
+        android:layout_toEndOf="@id/todaysDate"
+        android:text="Today"
+        android:layout_marginStart="8dp"
+        android:textSize="12sp"
+        android:backgroundTint="@android:color/holo_green_light" />
+
+    <!-- Button to select a date, placed to the right of the "Today" button -->
+    <Button
+        android:id="@+id/selectDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/todaysDate"
+        android:layout_toEndOf="@id/todayButton"
+        android:text="Select Date"
+        android:layout_marginStart="8dp"
+        android:textSize="12sp"
+        android:padding="8dp"
+        android:backgroundTint="@android:color/holo_blue_light" />
+
+    <!-- RecyclerView to display tasks -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tasksText"
+        android:layout_below="@id/todaysDate"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:nestedScrollingEnabled="true"/>
+        android:nestedScrollingEnabled="true" />
+
+    <!-- Floating action button to add new tasks -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

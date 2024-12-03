@@ -19,8 +19,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String ID = "id";
     private static final String TASK = "task";
     private static final String STATUS = "status";
+    private static final String DATE = "date";
     private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            TASK + " TEXT, " + STATUS + " INTEGER)";
+            TASK + " TEXT, " + STATUS + " INTEGER, " + DATE + " TEXT)";
     private SQLiteDatabase db;
 
     public DatabaseHandler(Context context) {
@@ -49,6 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
         cv.put(STATUS, 0);
+        cv.put(DATE, task.getDate());
         db.insert(TODO_TABLE, null, cv);
     }
 
@@ -67,6 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                        task.setDate(cur.getString(cur.getColumnIndex(DATE)));
 
                         taskList.add(task);
                     } while (cur.moveToNext());
@@ -86,14 +89,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.update(TODO_TABLE, cv, ID + "=?", new String[] {String.valueOf(id)});
     }
 
-    public void updateTask(int id, String task) {
+    public void updateTask(int id, String task, String date) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task);
+        cv.put(DATE, date);
         db.update(TODO_TABLE, cv, ID + "=?", new String[] {String.valueOf(id)});
     }
 
     public void deleteTask(int id) {
         db.delete(TODO_TABLE, ID + "=?", new String[] {String.valueOf(id)});
+    }
+
+    @SuppressLint("Range")
+    public List<TodoModel> getTasksForDate(String date) {
+        List<TodoModel> tasks = new ArrayList<>();
+        // Query to fetch tasks with the given date from the database
+        String query = "SELECT * FROM todo WHERE date = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+        if (cursor.moveToFirst()) {
+            do {
+                TodoModel task = new TodoModel();
+                task.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                task.setTask(cursor.getString(cursor.getColumnIndex("task")));
+                task.setStatus(cursor.getInt(cursor.getColumnIndex("status")));
+                task.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                tasks.add(task);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return tasks;
     }
 
  }
